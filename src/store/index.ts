@@ -11,6 +11,9 @@ export default new Vuex.Store({
     selectedElem: "" as string
   },
   mutations: {
+    loadForm: (state, inputForm: Form) => {
+      state.currentForm = inputForm;
+    },
     createForm: state => {
       state.currentForm = {
         type: "form",

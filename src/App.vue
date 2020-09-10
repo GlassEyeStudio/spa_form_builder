@@ -1,8 +1,19 @@
 <template>
   <div id="app">
-    <input type="button" value="Create new form" @click="createNewForm" />
-    <input type="button" value="Import existing form" />
-    <input type="button" value="Save to json file" @click.stop="saveToFile" />
+    <h1>Welcome to form builder!</h1>
+    <div class="actionButtons">
+      <input type="button" value="Create new form" @click="createNewForm" />
+      <label>
+        Import Existing file:
+        <input type="file" value="Import" v-on:change="readFromFile" />
+      </label>
+      <input
+        type="button"
+        value="Save to json file"
+        @click.stop="saveToFile"
+        v-if="$store.state.currentForm != null"
+      />
+    </div>
     <FormBuilder />
   </div>
 </template>
@@ -10,6 +21,7 @@
 <script lang="ts">
   import { Component, Vue } from "vue-property-decorator";
   import FormBuilder from "@/components/FormBuilder.vue";
+  import { Form } from "@/interfaces";
 
   @Component({
     components: {
@@ -33,6 +45,21 @@
       a.download = "form.json";
       a.click();
     }
+
+    readFromFile(e: Event) {
+      const files = (e.target as HTMLInputElement).files || null;
+      if (files) {
+        if (!files[0]) return;
+        const fr = new FileReader();
+        fr.onload = e =>
+          this.$store.commit(
+            "loadForm",
+            JSON.parse(e.target?.result as string) as Form
+          );
+
+        fr.readAsText(files[0]);
+      }
+    }
   }
 </script>
 
@@ -44,6 +71,7 @@
     padding: 0;
     margin: 0;
   }
+
   #app {
     font-family: "Nunito", Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -53,7 +81,17 @@
     background: #f8f8f8;
     height: 100%;
     min-height: calc(100vh - 80px);
+
+    h1 {
+      text-align: center;
+    }
+
+    .actionButtons {
+      display: flex;
+      justify-content: space-between;
+    }
   }
+
   input[type="button"] {
     background: #42b983;
     padding: 10px 20px;
