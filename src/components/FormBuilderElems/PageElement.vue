@@ -17,7 +17,7 @@
   import { Component, Prop, Vue } from "vue-property-decorator";
   import SectionElement from "@/components/FormBuilderElems/SectionElement.vue";
   import QuestionElement from "@/components/FormBuilderElems/QuestionElement.vue";
-  import { Page } from "@/interfaces";
+  import { Page, Question, Section } from "@/interfaces";
 
   @Component({
     name: "PageElement",
@@ -25,9 +25,9 @@
   })
   export default class PageElement extends Vue {
     @Prop({ required: true })
-    pageElem: Page;
+    pageElem: Page | undefined;
 
-    childComponent(item) {
+    childComponent(item: Section | Question) {
       switch (item.type) {
         case "section":
           return SectionElement;

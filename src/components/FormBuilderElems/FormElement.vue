@@ -21,7 +21,7 @@
   })
   export default class FormElement extends Vue {
     @Prop({ required: true })
-    formElem: Form;
+    formElem: Form | undefined;
 
     pageNode = PageElement;
   }

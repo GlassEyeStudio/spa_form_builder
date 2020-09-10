@@ -6,9 +6,8 @@
 
 <script lang="ts">
   import { Component, Vue } from "vue-property-decorator";
-  import FormElement from "@/components/FormBuilderElems/FormElement";
+  import FormElement from "@/components/FormBuilderElems/FormElement.vue";
   import json from "@/assets/form.json";
-  import { Form } from "@/interfaces";
 
   @Component({
     name: "FormBuilder",

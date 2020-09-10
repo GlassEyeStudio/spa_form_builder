@@ -14,7 +14,7 @@
   })
   export default class QuestionElement extends Vue {
     @Prop({ required: true })
-    itemElem: Question;
+    itemElem: Question | undefined;
   }
 </script>
 

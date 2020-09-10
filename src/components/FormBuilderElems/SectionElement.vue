@@ -14,7 +14,7 @@
 <script lang="ts">
   import { Component, Prop, Vue } from "vue-property-decorator";
   import QuestionElement from "@/components/FormBuilderElems/QuestionElement.vue";
-  import { Section } from "@/interfaces";
+  import { Question, Section } from "@/interfaces";
 
   @Component({
     name: "SectionElement",
@@ -22,9 +22,9 @@
   })
   export default class SectionElement extends Vue {
     @Prop({ required: true })
-    itemElem: Section;
+    itemElem: Section | undefined;
 
-    childComponent(item) {
+    childComponent(item: Section | Question) {
       switch (item.type) {
         case "section":
           return SectionElement;
