@@ -2,13 +2,13 @@
   <div id="app">
     <input type="button" value="Create new form" @click="createNewForm" />
     <input type="button" value="Import existing form" />
+    <input type="button" value="Save to json file" @click.stop="saveToFile" />
     <FormBuilder />
   </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from "vue-property-decorator";
-  import { v4 as uuidv4 } from "uuid";
   import FormBuilder from "@/components/FormBuilder.vue";
 
   @Component({
@@ -17,10 +17,21 @@
     }
   })
   export default class App extends Vue {
-    getNewUUID = () => uuidv4();
-
     createNewForm() {
       this.$store.commit("createForm");
+    }
+
+    saveToFile() {
+      const a = document.createElement("a");
+      const file = new Blob(
+        [JSON.stringify(this.$store.state.currentForm, null, 1)],
+        {
+          type: "text/json"
+        }
+      );
+      a.href = URL.createObjectURL(file);
+      a.download = "form.json";
+      a.click();
     }
   }
 </script>
