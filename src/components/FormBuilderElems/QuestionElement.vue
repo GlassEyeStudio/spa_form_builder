@@ -1,8 +1,7 @@
 <template>
   <div class="question">
-    {{ itemElem.responseType }}
-    {{ itemElem.uuid }}
     {{ itemElem.title }}
+    {{ itemElem.response_type }}
   </div>
 </template>
 
@@ -19,4 +18,12 @@
   }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+  .question {
+    line-height: 3rem;
+
+    &:not(:first-child) {
+      border-top: solid 1px #e3e3e3;
+    }
+  }
+</style>

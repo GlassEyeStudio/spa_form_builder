@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+    <h2 v-html="itemElem.title" class="sectionTitle" />
     <component
       v-for="item in itemElem.items"
       :key="item.uuid"
@@ -36,4 +37,19 @@
   }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+  .section {
+    .sectionTitle {
+      font-size: 1.25rem;
+    }
+
+    &:not(:first-child) {
+      border-top: solid 1px #e3e3e3;
+    }
+
+    .section,
+    .question {
+      margin-left: 10%;
+    }
+  }
+</style>

@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
     <FormBuilder />
-    <span> {{ getNewUUID() }}</span>
   </div>
 </template>
 
@@ -22,12 +20,16 @@
 </script>
 
 <style lang="scss">
+  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+
   #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: "Nunito", Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    padding: 40px;
+    color: #7c7c7c;
+    background: #f8f8f8;
+    height: 100%;
+    min-height: 100vh;
   }
 </style>

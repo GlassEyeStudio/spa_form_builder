@@ -2,7 +2,6 @@ export interface Form {
   type: string;
   items: Page[];
   uuid: string;
-  title: string;
 }
 export interface Page {
   type: string;
@@ -22,5 +21,5 @@ export interface Question {
   type: string;
   uuid: string;
   title: string;
-  responseType: string;
+  response_type: string;
 }
