@@ -4,6 +4,7 @@
       'page',
       $store.state.selectedElem === pageElem.uuid ? 'selected' : ''
     ]"
+    @click.stop="$store.commit('setSelectedItem', pageElem.uuid)"
   >
     <h1 class="pageTitle">
       <input
@@ -23,7 +24,6 @@
         'content',
         $store.state.selectedElem === pageElem.uuid ? 'selected' : ''
       ]"
-      @click.stop="$store.commit('setSelectedItem', pageElem.uuid)"
     >
       <div class="centeredButtons">
         <input
