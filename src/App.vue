@@ -7,29 +7,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
-import { v4 as uuidv4 } from 'uuid';
+  import { Component, Vue } from "vue-property-decorator";
+  import HelloWorld from "./components/HelloWorld.vue";
+  import { v4 as uuidv4 } from "uuid";
+  import json from "./assets/form.json";
 
-@Component({
-  components: {
-    HelloWorld
+  @Component({
+    components: {
+      HelloWorld
+    }
+  })
+  export default class App extends Vue {
+    getNewUUID = () => uuidv4();
   }
-})
-export default class App extends Vue {
-  getNewUUID() {
-    return uuidv4();
-  }
-}
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
 </style>
