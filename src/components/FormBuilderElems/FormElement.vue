@@ -65,6 +65,6 @@
   }
   .newPageButton {
     margin: auto;
-    display: inline-block;
+    display: block;
   }
 </style>

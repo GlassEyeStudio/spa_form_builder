@@ -99,7 +99,7 @@
     text-transform: uppercase;
     border: none;
     border-radius: 5px;
-    margin: 10px;
+    margin: 10px auto;
     transition: background-color 0.3s;
     cursor: pointer;
 
