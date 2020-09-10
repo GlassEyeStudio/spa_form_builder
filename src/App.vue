@@ -22,6 +22,11 @@
 <style lang="scss">
   @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
 
+  body,
+  html {
+    padding: 0;
+    margin: 0;
+  }
   #app {
     font-family: "Nunito", Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -30,6 +35,6 @@
     color: #7c7c7c;
     background: #f8f8f8;
     height: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
   }
 </style>
