@@ -30,13 +30,14 @@
     addNewPage() {
       const newPage = {
         type: "page",
-        title: "New page" + this.formElem.items.length,
+        title: "New page" + this.formElem?.items.length,
         uuid: uuidv4(),
         items: []
       } as Page;
-      this.$store.commit("addPageToForm", {
-        page: newPage,
-        atPosition: this.formElem.items.length
+      this.$store.commit("addElemToForm", {
+        element: newPage,
+        atPosition: this.formElem?.items.length,
+        parentUUID: this.formElem?.uuid
       });
     }
   }

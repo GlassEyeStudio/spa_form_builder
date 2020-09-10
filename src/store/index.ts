@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { Form, Page } from "@/interfaces";
+import { Form, Page, Question, Section } from "@/interfaces";
 import { v4 as uuidv4 } from "uuid";
 
 Vue.use(Vuex);
@@ -17,8 +17,33 @@ export default new Vuex.Store({
         items: []
       };
     },
-    addPageToForm: (state, item: { page: Page; atPosition: number }) => {
-      state.currentForm?.items.splice(item.atPosition, 0, item.page);
+    addElemToForm: (
+      state,
+      item: {
+        element: Page | Section | Question;
+        atPosition: number;
+        parentUUID: string;
+      }
+    ) => {
+      const update = () => (obj: Page | Section) => {
+        if (obj.uuid === item.parentUUID)
+          obj.items.splice(item.atPosition, 0, item.element);
+        else if (obj.items)
+          (obj.items.filter(i => i.type === "section") as Section[]).forEach(
+            update()
+          );
+      };
+
+      if (state.currentForm?.items) {
+        if (
+          state.currentForm.items.length > 0 &&
+          item.parentUUID !== state.currentForm?.uuid
+        )
+          state.currentForm.items.forEach(update());
+        else if (item.element.type === "page") {
+          state.currentForm.items.push(item.element as Page);
+        }
+      }
     }
   },
   actions: {},

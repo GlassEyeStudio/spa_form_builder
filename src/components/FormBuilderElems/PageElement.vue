@@ -9,6 +9,8 @@
         :itemElem="item"
         :uuid="item.uuid"
       />
+      <input type="button" @click="addNewSection" value="Add Section" />
+      <input type="button" @click="addNewQuestion" value="Add question" />
     </div>
   </div>
 </template>
@@ -18,6 +20,7 @@
   import SectionElement from "@/components/FormBuilderElems/SectionElement.vue";
   import QuestionElement from "@/components/FormBuilderElems/QuestionElement.vue";
   import { Page, Question, Section } from "@/interfaces";
+  import { v4 as uuidv4 } from "uuid";
 
   @Component({
     name: "PageElement",
@@ -36,6 +39,34 @@
         default:
           return null;
       }
+    }
+
+    addNewSection() {
+      const newSection = {
+        type: "section",
+        title: "New section",
+        uuid: uuidv4(),
+        items: []
+      } as Section;
+      this.$store.commit("addElemToForm", {
+        element: newSection,
+        atPosition: this.pageElem?.items.length,
+        parentUUID: this.pageElem?.uuid
+      });
+    }
+    addNewQuestion() {
+      const newSection = {
+        type: "question",
+        title: "New question",
+        uuid: uuidv4(),
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        response_type: "text"
+      } as Question;
+      this.$store.commit("addElemToForm", {
+        element: newSection,
+        atPosition: this.pageElem?.items.length,
+        parentUUID: this.pageElem?.uuid
+      });
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="formBuilder">
-    <FormElement :form-elem="formElement" />
+  <div class="formBuilder" v-if="$store.state.currentForm">
+    <FormElement :form-elem="$store.state.currentForm" />
   </div>
 </template>
 
@@ -13,9 +13,7 @@
     name: "FormBuilder",
     components: { FormElement }
   })
-  export default class FormBuilder extends Vue {
-    formElement = json;
-  }
+  export default class FormBuilder extends Vue {}
 </script>
 
 <style scoped></style>
