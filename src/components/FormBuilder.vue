@@ -22,12 +22,24 @@
     text-align: center;
     padding-left: 10%;
   }
+  .danger {
+    display: none;
+  }
+
   div.selected {
     background: #e3e3e3 !important;
-    > * > .centeredButtons,
+    > .sectionInner:last-of-type > .centeredButtons,
+    > * > .danger,
     > .centeredButtons,
-    &.question ~ .centeredButtons {
+    > .danger,
+    h1 > .danger,
+    &.question ~ .centeredButtons,
+    &.question ~ .danger {
       display: block;
+      &.danger {
+        display: inline-block;
+        position: relative;
+      }
     }
   }
 </style>

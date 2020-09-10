@@ -10,6 +10,12 @@
         v-model="itemElem.title"
         :disabled="$store.state.selectedElem !== itemElem.uuid"
       />
+      <input
+        class="danger"
+        type="button"
+        @click.stop="removeElement(itemElem.uuid, parentUuid)"
+        value="REMOVE"
+      />
       <select v-model="itemElem.response_type">
         <option>text</option>
         <option>number</option>
@@ -20,7 +26,7 @@
 
 <script lang="ts">
   import { Component, Vue, Prop } from "vue-property-decorator";
-  import { Question } from "@/interfaces";
+  import { Question, removeElement } from "@/interfaces";
 
   @Component({
     name: "QuestionElement"
@@ -28,6 +34,12 @@
   export default class QuestionElement extends Vue {
     @Prop({ required: true })
     itemElem: Question | undefined;
+
+    @Prop({ required: true })
+    parentUuid: string | undefined;
+
+    removeElement = (elemUUID: string, parentUID: string) =>
+      removeElement(elemUUID, parentUID);
   }
 </script>
 

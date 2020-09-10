@@ -1,10 +1,21 @@
 <template>
-  <div class="page">
+  <div
+    :class="[
+      'page',
+      $store.state.selectedElem === pageElem.uuid ? 'selected' : ''
+    ]"
+  >
     <h1 class="pageTitle">
       <input
         type="text"
         v-model="pageElem.title"
         :disabled="$store.state.selectedElem !== pageElem.uuid"
+      />
+      <input
+        class="danger"
+        type="button"
+        @click.stop="removeElement(pageElem.uuid, parentUuid)"
+        value="REMOVE"
       />
     </h1>
     <div
@@ -17,12 +28,12 @@
       <div class="centeredButtons">
         <input
           type="button"
-          @click="addNewSection(0, pageElem.uuid)"
+          @click="addNewElement('section', 0, pageElem.uuid)"
           value="+SECTION"
         />
         <input
           type="button"
-          @click="addNewQuestion(0, pageElem.uuid)"
+          @click="addNewElement('question', 0, pageElem.uuid)"
           value="+QUESTION"
         />
       </div>
@@ -35,16 +46,17 @@
           v-bind:is="childComponent(item)"
           :itemElem="item"
           :uuid="item.uuid"
+          :parentUuid="pageElem.uuid"
         />
         <div class="centeredButtons">
           <input
             type="button"
-            @click="addNewSection(index + 1, pageElem.uuid)"
+            @click="addNewElement('section', index + 1, pageElem.uuid)"
             value="+SECTION"
           />
           <input
             type="button"
-            @click="addNewQuestion(index + 1, pageElem.uuid)"
+            @click="addNewElement('question', index + 1, pageElem.uuid)"
             value="+QUESTION"
           />
         </div>
@@ -57,8 +69,13 @@
   import { Component, Prop, Vue } from "vue-property-decorator";
   import SectionElement from "@/components/FormBuilderElems/SectionElement.vue";
   import QuestionElement from "@/components/FormBuilderElems/QuestionElement.vue";
-  import { Page, Question, Section } from "@/interfaces";
-  import { v4 as uuidv4 } from "uuid";
+  import {
+    addNewElement,
+    Page,
+    Question,
+    Section,
+    removeElement
+  } from "@/interfaces";
 
   @Component({
     name: "PageElement",
@@ -67,6 +84,9 @@
   export default class PageElement extends Vue {
     @Prop({ required: true })
     pageElem: Page | undefined;
+
+    @Prop({ required: true })
+    parentUuid: string | undefined;
 
     childComponent(item: Section | Question) {
       switch (item.type) {
@@ -79,39 +99,14 @@
       }
     }
 
-    addNewSection(position: number, parentUID: string) {
-      this.$store.commit("addElemToForm", {
-        element: this.newSection(),
-        atPosition: position,
-        parentUUID: parentUID
-      });
-    }
-    addNewQuestion(position: number, parentUID: string) {
-      this.$store.commit("addElemToForm", {
-        element: this.newQuestion(),
-        atPosition: position,
-        parentUUID: parentUID
-      });
-    }
+    addNewElement = (
+      type: "page" | "section" | "question",
+      position: number,
+      parentUID: string
+    ) => addNewElement(type, position, parentUID);
 
-    newSection() {
-      return {
-        type: "section",
-        title: "New section",
-        uuid: uuidv4(),
-        items: []
-      } as Section;
-    }
-
-    newQuestion() {
-      return {
-        type: "question",
-        title: "New question",
-        uuid: uuidv4(),
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        response_type: "text"
-      } as Question;
-    }
+    removeElement = (elemUUID: string, parentUID: string) =>
+      removeElement(elemUUID, parentUID);
   }
 </script>
 
@@ -123,6 +118,8 @@
     .pageTitle {
       font-size: 1.5rem;
       margin: 22px 0;
+      display: flex;
+      justify-content: space-between;
 
       &:first-child {
         margin-top: 10px;

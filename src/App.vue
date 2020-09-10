@@ -82,6 +82,9 @@
     height: 100%;
     min-height: calc(100vh - 80px);
 
+    * {
+      transition: all 0.3s;
+    }
     h1 {
       text-align: center;
     }
@@ -99,12 +102,19 @@
     text-transform: uppercase;
     border: none;
     border-radius: 5px;
-    margin: 10px auto;
+    margin: 10px 10px;
     transition: background-color 0.3s;
     cursor: pointer;
 
     &:hover {
       background: #1c4c39;
+    }
+
+    &.danger {
+      background: brown;
+      &:hover {
+        background: crimson;
+      }
     }
   }
 
@@ -112,9 +122,9 @@
     background: transparent;
     border: none;
     padding: 10px 0;
-    display: block;
+    display: inline-block;
     font-size: inherit;
     font-weight: inherit;
-    width: 100%;
+    min-width: 50%;
   }
 </style>

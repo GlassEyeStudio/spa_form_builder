@@ -3,7 +3,7 @@
     <input
       class="newPageButton"
       type="button"
-      @click="addNewPage(0, formElem.uuid)"
+      @click="addNewElement('page', 0, formElem.uuid)"
       value="+ PAGE"
       v-if="!formElem.items || formElem.items.length === 0"
     />
@@ -12,10 +12,15 @@
       v-for="(item, index) in formElem.items"
       :key="item.uuid"
     >
-      <component v-bind:is="pageNode" :pageElem="item" :uuid="item.uuid" />
+      <component
+        v-bind:is="pageNode"
+        :pageElem="item"
+        :uuid="item.uuid"
+        :parentUuid="formElem.uuid"
+      />
       <input
         type="button"
-        @click="addNewPage(index + 1, formElem.uuid)"
+        @click="addNewElement('page', index + 1, formElem.uuid)"
         value="+ PAGE"
         class="newPageButton"
       />
@@ -26,8 +31,7 @@
 <script lang="ts">
   import { Component, Vue, Prop } from "vue-property-decorator";
   import PageElement from "@/components/FormBuilderElems/PageElement.vue";
-  import { Form, Page } from "@/interfaces";
-  import { v4 as uuidv4 } from "uuid";
+  import { Form, addNewElement } from "@/interfaces";
 
   @Component({
     name: "FormElement",
@@ -39,21 +43,11 @@
 
     pageNode = PageElement;
 
-    addNewPage(position: number, parentUID: string) {
-      this.$store.commit("addElemToForm", {
-        element: this.newPage(),
-        atPosition: position,
-        parentUUID: parentUID
-      });
-    }
-    newPage() {
-      return {
-        type: "page",
-        title: "New page " + this.formElem?.items.length,
-        uuid: uuidv4(),
-        items: []
-      } as Page;
-    }
+    addNewElement = (
+      type: "page" | "section" | "question",
+      position: number,
+      parentUID: string
+    ) => addNewElement(type, position, parentUID);
   }
 </script>
 
