@@ -1,7 +1,12 @@
 <template>
   <div class="question">
-    {{ itemElem.title }}
-    {{ itemElem.response_type }}
+    <label>
+      {{ itemElem.title }}
+      <select v-model="itemElem.response_type">
+        <option>text</option>
+        <option>number</option>
+      </select>
+    </label>
   </div>
 </template>
 
@@ -24,6 +29,19 @@
 
     &:not(:first-child) {
       border-top: solid 1px #e3e3e3;
+    }
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      select {
+        margin: 5px;
+        padding: 7px 20px;
+        background: #e3e3e3;
+        border: none;
+        border-radius: 5px;
+      }
     }
   }
 </style>
