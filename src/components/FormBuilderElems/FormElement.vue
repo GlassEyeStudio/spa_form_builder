@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="">
     <input
       class="newPageButton"
       type="button"

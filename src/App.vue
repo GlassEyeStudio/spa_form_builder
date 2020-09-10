@@ -99,12 +99,22 @@
     text-transform: uppercase;
     border: none;
     border-radius: 5px;
-    margin: 0 10px;
+    margin: 10px;
     transition: background-color 0.3s;
     cursor: pointer;
 
     &:hover {
       background: #1c4c39;
     }
+  }
+
+  input[type="text"] {
+    background: transparent;
+    border: none;
+    padding: 10px 0;
+    display: block;
+    font-size: inherit;
+    font-weight: inherit;
+    width: 100%;
   }
 </style>

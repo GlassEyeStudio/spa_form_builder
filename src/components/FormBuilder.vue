@@ -25,7 +25,7 @@
   div.selected {
     background: #e3e3e3 !important;
     > * > .centeredButtons,
-    > .centeredButtons:last-of-type,
+    > .centeredButtons,
     &.question ~ .centeredButtons {
       display: block;
     }

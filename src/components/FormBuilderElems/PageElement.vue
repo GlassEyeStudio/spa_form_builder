@@ -1,6 +1,12 @@
 <template>
   <div class="page">
-    <h1 v-html="pageElem.title" class="pageTitle" />
+    <h1 class="pageTitle">
+      <input
+        type="text"
+        v-model="pageElem.title"
+        :disabled="$store.state.selectedElem !== pageElem.uuid"
+      />
+    </h1>
     <div
       :class="[
         'content',
@@ -8,7 +14,7 @@
       ]"
       @click.stop="$store.commit('setSelectedItem', pageElem.uuid)"
     >
-      <div class="centeredButtons" v-if="pageElem.items.length === 0">
+      <div class="centeredButtons">
         <input
           type="button"
           @click="addNewSection(0, pageElem.uuid)"

@@ -32,7 +32,6 @@ export default new Vuex.Store({
       const update = () => (obj: Page | Section) => {
         if (obj.uuid === item.parentUUID) {
           obj.items.splice(item.atPosition, 0, item.element);
-          state.selectedElem = item.element.uuid;
         } else if (obj.items)
           (obj.items.filter(i => i.type === "section") as Section[]).forEach(
             update()
@@ -51,9 +50,9 @@ export default new Vuex.Store({
             0,
             item.element as Page
           );
-          state.selectedElem = item.element.uuid;
         }
       }
+      state.selectedElem = item.element.uuid;
     },
     setSelectedItem(state, selectedUUID: string) {
       state.selectedElem = selectedUUID;

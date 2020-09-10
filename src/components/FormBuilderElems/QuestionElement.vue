@@ -5,7 +5,11 @@
     @click.stop="$store.commit('setSelectedItem', itemElem.uuid)"
   >
     <label>
-      {{ itemElem.title }}
+      <input
+        type="text"
+        v-model="itemElem.title"
+        :disabled="$store.state.selectedElem !== itemElem.uuid"
+      />
       <select v-model="itemElem.response_type">
         <option>text</option>
         <option>number</option>
@@ -43,7 +47,7 @@
         margin: 5px;
         padding: 7px 20px;
         background: #e3e3e3;
-        border: none;
+        border: #42b983 solid 1px;
         border-radius: 5px;
       }
     }

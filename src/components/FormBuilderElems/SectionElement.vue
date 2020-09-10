@@ -4,8 +4,14 @@
     :class="$store.state.selectedElem === itemElem.uuid ? 'selected' : ''"
     @click.stop="$store.commit('setSelectedItem', itemElem.uuid)"
   >
-    <h2 v-html="itemElem.title" class="sectionTitle" />
-    <div class="centeredButtons" v-if="itemElem.items.length === 0">
+    <h2 class="pageTitle">
+      <input
+        type="text"
+        v-model="itemElem.title"
+        :disabled="$store.state.selectedElem !== itemElem.uuid"
+      />
+    </h2>
+    <div class="centeredButtons">
       <input
         type="button"
         @click="addNewSection(0, itemElem.uuid)"
