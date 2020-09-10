@@ -1,15 +1,45 @@
 <template>
-  <div class="section">
+  <div
+    class="section"
+    :class="$store.state.selectedElem === itemElem.uuid ? 'selected' : ''"
+    @click.stop="$store.commit('setSelectedItem', itemElem.uuid)"
+  >
     <h2 v-html="itemElem.title" class="sectionTitle" />
-    <component
-      v-for="item in itemElem.items"
+    <div class="centeredButtons" v-if="itemElem.items.length === 0">
+      <input
+        type="button"
+        @click="addNewSection(0, itemElem.uuid)"
+        value="+ NESTED SECTION"
+      />
+      <input
+        type="button"
+        @click="addNewQuestion(0, itemElem.uuid)"
+        value="+ NESTED QUESTION"
+      />
+    </div>
+    <div
+      class="sectionInner"
+      v-for="(item, index) in itemElem.items"
       :key="item.uuid"
-      v-bind:is="childComponent(item)"
-      :itemElem="item"
-      :uuid="item.uuid"
-    />
-    <input type="button" @click="addNewSection" value="Add Section" />
-    <input type="button" @click="addNewQuestion" value="Add question" />
+    >
+      <component
+        v-bind:is="childComponent(item)"
+        :itemElem="item"
+        :uuid="item.uuid"
+      />
+      <div class="centeredButtons">
+        <input
+          type="button"
+          @click="addNewSection(index + 1, itemElem.uuid)"
+          value="+ SECTION"
+        />
+        <input
+          type="button"
+          @click="addNewQuestion(index + 1, itemElem.uuid)"
+          value="+ QUESTION"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -38,33 +68,38 @@
       }
     }
 
-    addNewSection() {
-      const newSection = {
+    addNewSection(position: number, parentUID: string) {
+      this.$store.commit("addElemToForm", {
+        element: this.newSection(),
+        atPosition: position,
+        parentUUID: parentUID
+      });
+    }
+    addNewQuestion(position: number, parentUID: string) {
+      this.$store.commit("addElemToForm", {
+        element: this.newQuestion(),
+        atPosition: position,
+        parentUUID: parentUID
+      });
+    }
+
+    newSection() {
+      return {
         type: "section",
         title: "New section",
         uuid: uuidv4(),
         items: []
       } as Section;
-      this.$store.commit("addElemToForm", {
-        element: newSection,
-        atPosition: this.itemElem?.items.length,
-        parentUUID: this.itemElem?.uuid
-      });
     }
 
-    addNewQuestion() {
-      const newSection = {
+    newQuestion() {
+      return {
         type: "question",
         title: "New question",
         uuid: uuidv4(),
         // eslint-disable-next-line @typescript-eslint/camelcase
         response_type: "text"
       } as Question;
-      this.$store.commit("addElemToForm", {
-        element: newSection,
-        atPosition: this.itemElem?.items.length,
-        parentUUID: this.itemElem?.uuid
-      });
     }
   }
 </script>

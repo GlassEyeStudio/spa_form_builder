@@ -7,7 +7,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentForm: null as null | Form
+    currentForm: null as null | Form,
+    selectedElem: "" as string
   },
   mutations: {
     createForm: state => {
@@ -26,9 +27,10 @@ export default new Vuex.Store({
       }
     ) => {
       const update = () => (obj: Page | Section) => {
-        if (obj.uuid === item.parentUUID)
+        if (obj.uuid === item.parentUUID) {
           obj.items.splice(item.atPosition, 0, item.element);
-        else if (obj.items)
+          state.selectedElem = item.element.uuid;
+        } else if (obj.items)
           (obj.items.filter(i => i.type === "section") as Section[]).forEach(
             update()
           );
@@ -41,9 +43,17 @@ export default new Vuex.Store({
         )
           state.currentForm.items.forEach(update());
         else if (item.element.type === "page") {
-          state.currentForm.items.push(item.element as Page);
+          state.currentForm.items.splice(
+            item.atPosition,
+            0,
+            item.element as Page
+          );
+          state.selectedElem = item.element.uuid;
         }
       }
+    },
+    setSelectedItem(state, selectedUUID: string) {
+      state.selectedElem = selectedUUID;
     }
   },
   actions: {},

@@ -1,5 +1,9 @@
 <template>
-  <div class="question">
+  <div
+    class="question"
+    :class="$store.state.selectedElem === itemElem.uuid ? 'selected' : ''"
+    @click.stop="$store.commit('setSelectedItem', itemElem.uuid)"
+  >
     <label>
       {{ itemElem.title }}
       <select v-model="itemElem.response_type">

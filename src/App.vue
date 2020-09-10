@@ -43,4 +43,19 @@
     height: 100%;
     min-height: calc(100vh - 80px);
   }
+  input[type="button"] {
+    background: #42b983;
+    padding: 10px 20px;
+    color: white;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      background: #1c4c39;
+    }
+  }
 </style>

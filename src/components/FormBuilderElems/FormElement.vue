@@ -1,13 +1,25 @@
 <template>
   <form>
-    <component
-      v-for="item in formElem.items"
-      :key="item.uuid"
-      v-bind:is="pageNode"
-      :pageElem="item"
-      :uuid="item.uuid"
+    <input
+      class="newPageButton"
+      type="button"
+      @click="addNewPage(0, formElem.uuid)"
+      value="+ PAGE"
+      v-if="!formElem.items || formElem.items.length === 0"
     />
-    <input type="button" @click="addNewPage" value="+" />
+    <div
+      class="pageHandler"
+      v-for="(item, index) in formElem.items"
+      :key="item.uuid"
+    >
+      <component v-bind:is="pageNode" :pageElem="item" :uuid="item.uuid" />
+      <input
+        type="button"
+        @click="addNewPage(index + 1, formElem.uuid)"
+        value="+ PAGE"
+        class="newPageButton"
+      />
+    </div>
   </form>
 </template>
 
@@ -27,20 +39,32 @@
 
     pageNode = PageElement;
 
-    addNewPage() {
-      const newPage = {
+    addNewPage(position: number, parentUID: string) {
+      this.$store.commit("addElemToForm", {
+        element: this.newPage(),
+        atPosition: position,
+        parentUUID: parentUID
+      });
+    }
+    newPage() {
+      return {
         type: "page",
-        title: "New page" + this.formElem?.items.length,
+        title: "New page " + this.formElem?.items.length,
         uuid: uuidv4(),
         items: []
       } as Page;
-      this.$store.commit("addElemToForm", {
-        element: newPage,
-        atPosition: this.formElem?.items.length,
-        parentUUID: this.formElem?.uuid
-      });
     }
   }
 </script>
 
-<style scoped></style>
+<style scoped>
+  form {
+    display: block;
+    width: 100%;
+    min-height: 80vh;
+  }
+  .newPageButton {
+    margin: auto;
+    display: inline-block;
+  }
+</style>

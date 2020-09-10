@@ -16,4 +16,18 @@
   export default class FormBuilder extends Vue {}
 </script>
 
-<style scoped></style>
+<style lang="scss">
+  .centeredButtons {
+    display: none;
+    text-align: center;
+    padding-left: 10%;
+  }
+  div.selected {
+    background: #e3e3e3 !important;
+    > * > .centeredButtons,
+    > .centeredButtons:last-of-type,
+    &.question ~ .centeredButtons {
+      display: block;
+    }
+  }
+</style>
