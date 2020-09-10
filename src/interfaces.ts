@@ -1,21 +1,25 @@
-export interface form {
-  items: page[] | page;
+export interface Form {
+  type: string;
+  items: Page[];
   uuid: string;
   title: string;
 }
-export interface page {
-  items: (section | question)[];
-  uuid: string;
-  title: string;
-}
-
-export interface section {
-  items: (section | question)[];
+export interface Page {
+  type: string;
+  items: (Section | Question)[];
   uuid: string;
   title: string;
 }
 
-export interface question {
+export interface Section {
+  type: string;
+  items: (Section | Question)[];
+  uuid: string;
+  title: string;
+}
+
+export interface Question {
+  type: string;
   uuid: string;
   title: string;
   responseType: string;
