@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <input type="button" value="Create new form" @click="createNewForm" />
+    <input type="button" value="Import existing form" />
     <FormBuilder />
   </div>
 </template>
@@ -16,6 +18,10 @@
   })
   export default class App extends Vue {
     getNewUUID = () => uuidv4();
+
+    createNewForm() {
+      this.$store.commit("createForm");
+    }
   }
 </script>
 

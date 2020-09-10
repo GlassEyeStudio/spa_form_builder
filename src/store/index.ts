@@ -1,16 +1,24 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { Form } from "@/interfaces";
+import { Form, Page } from "@/interfaces";
+import { v4 as uuidv4 } from "uuid";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentForm: {} as Form
+    currentForm: null as null | Form
   },
   mutations: {
-    updateForms: (state, form: Form) => {
-      state.currentForm = form;
+    createForm: state => {
+      state.currentForm = {
+        type: "form",
+        uuid: uuidv4(),
+        items: []
+      };
+    },
+    addPageToForm: (state, item: { page: Page; atPosition: number }) => {
+      state.currentForm?.items.splice(item.atPosition, 0, item.page);
     }
   },
   actions: {},

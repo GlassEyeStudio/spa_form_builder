@@ -7,13 +7,15 @@
       :pageElem="item"
       :uuid="item.uuid"
     />
+    <input type="button" @click="addNewPage" value="+" />
   </form>
 </template>
 
 <script lang="ts">
   import { Component, Vue, Prop } from "vue-property-decorator";
   import PageElement from "@/components/FormBuilderElems/PageElement.vue";
-  import { Form } from "@/interfaces";
+  import { Form, Page } from "@/interfaces";
+  import { v4 as uuidv4 } from "uuid";
 
   @Component({
     name: "FormElement",
@@ -24,6 +26,19 @@
     formElem: Form | undefined;
 
     pageNode = PageElement;
+
+    addNewPage() {
+      const newPage = {
+        type: "page",
+        title: "New page" + this.formElem.items.length,
+        uuid: uuidv4(),
+        items: []
+      } as Page;
+      this.$store.commit("addPageToForm", {
+        page: newPage,
+        atPosition: this.formElem.items.length
+      });
+    }
   }
 </script>
 
